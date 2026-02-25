@@ -1,5 +1,4 @@
 import { env } from "cloudflare:workers";
-import { renderMarkdown } from "@/lib/markdown-utils";
 
 interface PostMeta {
     id: string;
@@ -71,14 +70,12 @@ export async function getPostById(id: string) {
         const meta = allPosts.find(p => p.id === id);
         if (!meta) return null;
 
-        const renderedContent = await renderMarkdown(markdownContent);
-
         return {
             id,
             title: meta.title,
             date: meta.date,
             category: meta.category,
-            content: renderedContent,
+            content: markdownContent,
             excerpt: meta.excerpt,
         };
     } catch (error) {
