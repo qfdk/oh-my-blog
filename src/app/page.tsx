@@ -2,6 +2,7 @@
 import {getPaginatedPosts} from "@/lib/posts.server";
 import ArticleCard from "@/components/ArticleCard";
 import Pagination from "@/components/Pagination";
+import PageReady from "@/components/PageReady";
 
 interface HomeProps {
     params: { page?: string };
@@ -31,6 +32,7 @@ export default async function Home({searchParams}: HomeProps) {
                 currentPage={pagination.currentPage}
                 totalPages={pagination.totalPages}
             />
+            <PageReady/>
         </>
     );
 }

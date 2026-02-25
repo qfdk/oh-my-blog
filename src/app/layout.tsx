@@ -14,7 +14,7 @@ import {ThemeToggle} from "@/components/ThemeToggle";
 import CategorySidebar from "@/components/CategorySidebar";
 import NavigationLoading from "@/components/NavigationLoading";
 import ContentLoading from "@/components/ContentLoading";
-import PageReady from "@/components/PageReady";
+
 import styles from "./layout.module.css";
 
 // 移除Google字体，直接使用系统字体栈
@@ -152,7 +152,6 @@ export default function RootLayout({children}: {
                     <div id="content-area" className={styles.contentWrapper}>
                         <Suspense fallback={<ContentLoading/>}>
                             {children}
-                            <PageReady/>
                         </Suspense>
                     </div>
                     <aside>

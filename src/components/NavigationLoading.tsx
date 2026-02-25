@@ -2,14 +2,15 @@
 import {useEffect} from 'react';
 
 let safetyTimer: ReturnType<typeof setTimeout> | null = null;
-let showTime = 0;
 
 function showOverlay() {
     if (document.getElementById('content-loading-overlay')) return;
     const contentArea = document.getElementById('content-area');
     if (!contentArea) return;
 
-    showTime = Date.now();
+    // 锁定内容区高度，防止 loading.tsx 返回 null 时内容区缩小跳动
+    contentArea.style.minHeight = contentArea.offsetHeight + 'px';
+
     const overlay = document.createElement('div');
     overlay.id = 'content-loading-overlay';
     overlay.innerHTML = `
@@ -22,26 +23,26 @@ function showOverlay() {
     contentArea.appendChild(overlay);
 }
 
-function doHide() {
-    const overlay = document.getElementById('content-loading-overlay');
-    if (overlay) {
-        overlay.style.opacity = '0';
-        setTimeout(() => overlay.remove(), 200);
-    }
-}
-
 function hideOverlay() {
     if (safetyTimer) {
         clearTimeout(safetyTimer);
         safetyTimer = null;
     }
-    const elapsed = Date.now() - showTime;
-    const remaining = 250 - elapsed;
-    if (remaining > 0) {
-        setTimeout(doHide, remaining);
-    } else {
-        doHide();
-    }
+    // 等浏览器绘制新内容后再淡出 overlay
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            const overlay = document.getElementById('content-loading-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.remove();
+                    // overlay 完全消失后再解锁高度
+                    const contentArea = document.getElementById('content-area');
+                    if (contentArea) contentArea.style.minHeight = '';
+                }, 200);
+            }
+        });
+    });
 }
 
 export default function NavigationLoading() {
@@ -61,11 +62,8 @@ export default function NavigationLoading() {
             if (href === window.location.pathname + window.location.search) return;
             if (link.getAttribute('aria-disabled') === 'true') return;
 
-            // 导航去首页时不显示 overlay，由骨架屏处理
-            if (href === '/' || href.startsWith('/?page=')) return;
-
             showOverlay();
-            safetyTimer = setTimeout(hideOverlay, 800);
+            safetyTimer = setTimeout(hideOverlay, 3000);
         };
 
         document.addEventListener('click', handleClick, true);

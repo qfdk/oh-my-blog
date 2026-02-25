@@ -4,6 +4,7 @@ import {getAllPosts} from "@/lib/posts.server";
 import {notFound} from "next/navigation";
 import type {Metadata} from "next";
 import {categoryNames} from "@/lib/constants";
+import PageReady from "@/components/PageReady";
 
 type MetadataProps = {
     params: { slug: string }
@@ -49,6 +50,7 @@ export default async function Page({params}: { params: { slug: string } }) {
                     ))
                 }
             </div>
+            <PageReady/>
         </article>
     );
 }

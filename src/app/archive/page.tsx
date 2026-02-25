@@ -3,6 +3,7 @@ import styles from "./archive.module.css";
 import {getAllPosts} from "@/lib/posts.server";
 import type {Metadata} from "next";
 import Link from "next/link";
+import PageReady from "@/components/PageReady";
 
 export const metadata: Metadata = {
     title: "归档",
@@ -103,6 +104,7 @@ export default async function ArchivePage() {
                     </div>
                 ))}
             </div>
+            <PageReady/>
         </article>
     );
 }

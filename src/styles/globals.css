@@ -1163,7 +1163,20 @@ html[class~="dark"] .shiki span {
     }
 }
 
-/* 导航加载遮罩 - 用 DOM 直接操作，不受 React 生命周期影响 */
+/* loading 卡片 - loading.tsx 使用 */
+.content-loading-card {
+    background: var(--article-bg);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    padding: 140px 0;
+}
+
 /* 内容区 loading 遮罩 */
 #content-area {
     position: relative;

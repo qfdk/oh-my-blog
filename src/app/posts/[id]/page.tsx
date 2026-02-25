@@ -4,6 +4,7 @@ import {notFound} from "next/navigation";
 import {categoryNames} from "@/lib/constants";
 import {Metadata} from "next";
 import ArticleContent from "@/components/ArticleContent";
+import PageReady from "@/components/PageReady";
 import styles from "./post.module.css";
 
 export async function generateMetadata({params}: { params: { id: string } }): Promise<Metadata> {
@@ -51,6 +52,7 @@ export default async function Post({params}: { params: { id: string } }) {
             </header>
 
             <ArticleContent content={post.content}/>
+            <PageReady/>
         </article>
     );
 }

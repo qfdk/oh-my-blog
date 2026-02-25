@@ -1,6 +1,7 @@
 // src/app/about/page.tsx
 import styles from "./about.module.css";
 import type {Metadata} from "next";
+import PageReady from "@/components/PageReady";
 
 export const metadata: Metadata = {
     title: "关于",
@@ -98,6 +99,7 @@ export default function AboutPage() {
                     </section>
                 </div>
             </main>
+            <PageReady/>
         </div>
     );
 }

@@ -1,14 +1,13 @@
 "use client";
-import {usePathname} from "next/navigation";
-import PostsListLoading from "@/components/PostsListLoading";
 
 export default function ContentLoading() {
-    const pathname = usePathname();
-
-    // 只有首页用骨架屏，其他页面由 overlay spinner 处理
-    if (pathname === "/" || pathname.startsWith("/?page=")) {
-        return <PostsListLoading/>;
-    }
-
-    return null;
+    return (
+        <div className="content-loading-card">
+            <div className="content-spinner">
+                <div className="content-spinner-ring"></div>
+                <div className="content-spinner-center"></div>
+            </div>
+            <div className="content-spinner-text">载入中...</div>
+        </div>
+    );
 }

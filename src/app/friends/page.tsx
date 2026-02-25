@@ -2,6 +2,7 @@
 import styles from "./friends.module.css";
 import {siteConfig} from "@/lib/constants";
 import type {Metadata} from "next";
+import PageReady from "@/components/PageReady";
 
 export const metadata: Metadata = {
     title: "友情链接",
@@ -36,7 +37,7 @@ export default function FriendsPage() {
                     </a>
                 ))}
             </div>
-
+            <PageReady/>
             {/*<section className={styles.exchange}>*/}
             {/*    <h2>交换友链</h2>*/}
             {/*    <p>如果要交换友链，请按以下格式留言：</p>*/}
