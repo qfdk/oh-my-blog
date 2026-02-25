@@ -14,7 +14,7 @@ interface Post {
     id: string;
     title: string;
     date: string;
-    rawDate: Date;
+    rawDate: string;
 }
 
 interface PostWithDay extends Post {

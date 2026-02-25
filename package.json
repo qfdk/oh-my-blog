@@ -11,10 +11,11 @@
     "analyze": "cross-env ANALYZE=true next build",
     "build:modern": "cross-env NODE_ENV=production BROWSERSLIST_ENV=production TARGET_BROWSERS=modern next build",
     "dev:vinext": "vite dev --port 3001",
-    "build:vinext": "vite build"
+    "build:vinext": "vite build",
+    "deploy": "vinext deploy --name oh-my-blog",
+    "upload-posts": "node scripts/upload-posts.js"
   },
   "dependencies": {
-    "gray-matter": "^4.0.3",
     "lucide-react": "^0.454.0",
     "markdown-it": "13.0.2",
     "next": "latest",
@@ -25,6 +26,7 @@
     "shiki": "^3.19.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.25.5",
     "@next/bundle-analyzer": "^15.5.7",
     "@types/markdown-it": "^13.0.9",
     "@types/node": "^20.19.25",
@@ -35,17 +37,20 @@
     "esbuild": "^0.27.3",
     "eslint": "^8.57.1",
     "eslint-config-next": "15.0.2",
+    "gray-matter": "^4.0.3",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
     "typescript": "^5.9.3",
     "vinext": "^0.0.7",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "wrangler": "^4.68.1"
   },
   "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748",
   "type": "module",
   "pnpm": {
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "workerd"
     ]
   }
 }
