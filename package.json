@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "analyze": "cross-env ANALYZE=true next build",
-    "build:modern": "cross-env NODE_ENV=production BROWSERSLIST_ENV=production TARGET_BROWSERS=modern next build"
+    "build:modern": "cross-env NODE_ENV=production BROWSERSLIST_ENV=production TARGET_BROWSERS=modern next build",
+    "dev:vinext": "vite dev --port 3001",
+    "build:vinext": "vite build"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -17,8 +19,9 @@
     "markdown-it": "13.0.2",
     "next": "latest",
     "next-themes": "^0.4.6",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-server-dom-webpack": "^19.2.4",
     "shiki": "^3.19.0"
   },
   "devDependencies": {
@@ -27,12 +30,22 @@
     "@types/node": "^20.19.25",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-rsc": "^0.5.20",
     "cross-env": "^7.0.3",
+    "esbuild": "^0.27.3",
     "eslint": "^8.57.1",
     "eslint-config-next": "15.0.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vinext": "^0.0.7",
+    "vite": "^7.3.1"
   },
-  "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
+  "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748",
+  "type": "module",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }

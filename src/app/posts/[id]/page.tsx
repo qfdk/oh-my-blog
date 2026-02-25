@@ -5,9 +5,7 @@ import {categoryNames} from "@/lib/constants";
 import {Metadata} from "next";
 import ArticleContent from "@/components/ArticleContent";
 import styles from "./post.module.css";
-// 移除highlight.js CSS，使用layout.tsx中的自定义样式
 
-// 修复 generateMetadata
 export async function generateMetadata({params}: { params: { id: string } }): Promise<Metadata> {
     const post = await getPostById((await params).id);
 
@@ -52,7 +50,7 @@ export default async function Post({params}: { params: { id: string } }) {
                 </div>
             </header>
 
-            <ArticleContent content={post.content} />
+            <ArticleContent content={post.content}/>
         </article>
     );
 }

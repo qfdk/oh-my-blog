@@ -1,6 +1,10 @@
 // src/app/layout.tsx
 import {Suspense} from "react";
 import "@/styles/globals.css";
+// 显式导入客户端组件的 CSS，确保 SSR 时不丢失样式
+import "@/components/Navigation/navigation.module.css";
+import "@/components/ThemeToggle/style.module.css";
+import "@/components/ArticleCard.module.css";
 import {siteConfig} from "@/lib/constants";
 import Navigation from "@/components/Navigation";
 import {getCategoryStats} from "@/lib/posts.server";
@@ -9,6 +13,8 @@ import {Providers} from "@/components/Providers";
 import {ThemeToggle} from "@/components/ThemeToggle";
 import CategorySidebar from "@/components/CategorySidebar";
 import NavigationLoading from "@/components/NavigationLoading";
+import ContentLoading from "@/components/ContentLoading";
+import PageReady from "@/components/PageReady";
 import styles from "./layout.module.css";
 
 // 移除Google字体，直接使用系统字体栈
@@ -143,9 +149,10 @@ export default function RootLayout({children}: {
                 <Navigation/>
 
                 <div className="layout with-sidebar">
-                    <div className={styles.contentWrapper}>
-                        <Suspense fallback={null}>
+                    <div id="content-area" className={styles.contentWrapper}>
+                        <Suspense fallback={<ContentLoading/>}>
                             {children}
+                            <PageReady/>
                         </Suspense>
                     </div>
                     <aside>
@@ -157,6 +164,7 @@ export default function RootLayout({children}: {
 
                 <footer>
                     <p>{siteConfig.footer}</p>
+                    <p style={{fontSize: '12px', opacity: 0.5, marginTop: '4px'}}>Powered by Vinext</p>
                 </footer>
             </div>
             <Suspense fallback={null}>

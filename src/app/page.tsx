@@ -1,19 +1,17 @@
 // src/app/page.tsx
-import {Suspense} from "react";
 import {getPaginatedPosts} from "@/lib/posts.server";
 import ArticleCard from "@/components/ArticleCard";
 import Pagination from "@/components/Pagination";
-import PostsListLoading from "@/components/PostsListLoading";
 
 interface HomeProps {
     params: { page?: string };
     searchParams: { page?: string };
 }
 
-const PostsList = async ({page}: { page: number }) => {
+export default async function Home({searchParams}: HomeProps) {
+    const page = Number((await searchParams).page) || 1;
     const {posts, pagination} = await getPaginatedPosts(page);
-    
-    // 预取下一页数据
+
     if (pagination.currentPage < pagination.totalPages) {
         void getPaginatedPosts(pagination.currentPage + 1);
     }
@@ -33,18 +31,6 @@ const PostsList = async ({page}: { page: number }) => {
                 currentPage={pagination.currentPage}
                 totalPages={pagination.totalPages}
             />
-        </>
-    );
-};
-
-export default async function Home({searchParams}: HomeProps) {
-    const page = Number((await searchParams).page) || 1;
-
-    return (
-        <>
-            <Suspense fallback={<PostsListLoading />}>
-                <PostsList page={page}/>
-            </Suspense>
         </>
     );
 }

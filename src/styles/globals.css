@@ -1040,6 +1040,8 @@ html[class~="dark"] .shiki span {
     width: 90px;
 }
 
+
+
 /* 桌面端确保侧边栏显示 */
 @media (min-width: 769px) {
     .layout.with-sidebar {
@@ -1159,4 +1161,67 @@ html[class~="dark"] .shiki span {
     .content ol {
         padding-left: 20px;
     }
+}
+
+/* 导航加载遮罩 - 用 DOM 直接操作，不受 React 生命周期影响 */
+/* 内容区 loading 遮罩 */
+#content-area {
+    position: relative;
+}
+
+#content-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--article-bg);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 140px;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.content-spinner {
+    position: relative;
+    width: 48px;
+    height: 48px;
+}
+
+.content-spinner-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent, var(--primary-color));
+    animation: contentSpin 1.2s linear infinite;
+}
+
+.content-spinner-center {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--article-bg);
+}
+
+.content-spinner-text {
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.6;
+}
+
+@keyframes contentSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

@@ -3,7 +3,7 @@ export const siteConfig = {
     title: `qfdk's Blog`,
     author: "qfdk",
     description: "黑科技自留地...",
-    footer: "© 2024 qfdk | 保留所有权利",
+    footer: "© 2026-2027 qfdk | 保留所有权利",
 
     // 导航菜单
     nav: [

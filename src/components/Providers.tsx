@@ -7,7 +7,6 @@ import {initPerformanceOptimizations} from "@/lib/performance";
 
 export function Providers({children}: { children: ReactNode }) {
     useEffect(() => {
-        // 初始化性能优化
         initPerformanceOptimizations();
     }, []);
 
