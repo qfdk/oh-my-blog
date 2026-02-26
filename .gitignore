@@ -41,3 +41,42 @@ next-env.d.ts
 .idea
 
 **/.claude/settings.local.json
+
+# build output
+/dist
+
+# wrangler
+.wrangler/
+
+# AI editors/tools
+.agent/
+.agents/
+.claude/
+.cline/
+.codebuddy/
+.commandcode/
+.continue/
+.crush/
+.factory/
+.goose/
+.junie/
+.kilocode/
+.kiro/
+.kode/
+.mcpjam/
+.mux/
+.neovate/
+.openhands/
+.pi/
+.pochi/
+.qoder/
+.qwen/
+.roo/
+.trae/
+.windsurf/
+.zencoder/
+skills/
+skills-lock.json
+
+# misc
+.node-version

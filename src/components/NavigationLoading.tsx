@@ -1,56 +1,17 @@
 "use client";
 import {useEffect} from 'react';
 
-let safetyTimer: ReturnType<typeof setTimeout> | null = null;
-
-function showOverlay() {
-    if (document.getElementById('content-loading-overlay')) return;
-    const contentArea = document.getElementById('content-area');
-    if (!contentArea) return;
-
-    // 锁定内容区高度，防止 loading.tsx 返回 null 时内容区缩小跳动
-    contentArea.style.minHeight = contentArea.offsetHeight + 'px';
-
-    const overlay = document.createElement('div');
-    overlay.id = 'content-loading-overlay';
-    overlay.innerHTML = `
-        <div class="content-spinner">
-            <div class="content-spinner-ring"></div>
-            <div class="content-spinner-center"></div>
-        </div>
-        <div class="content-spinner-text">载入中...</div>
-    `;
-    contentArea.appendChild(overlay);
-}
-
-function hideOverlay() {
-    if (safetyTimer) {
-        clearTimeout(safetyTimer);
-        safetyTimer = null;
-    }
-    // 等浏览器绘制新内容后再淡出 overlay
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            const overlay = document.getElementById('content-loading-overlay');
-            if (overlay) {
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.remove();
-                    // overlay 完全消失后再解锁高度
-                    const contentArea = document.getElementById('content-area');
-                    if (contentArea) contentArea.style.minHeight = '';
-                }, 200);
-            }
-        });
-    });
-}
+let fadeTimer: ReturnType<typeof setTimeout> | null = null;
 
 export default function NavigationLoading() {
+    // Reset opacity on mount (including remount after RSC navigation)
     useEffect(() => {
-        const onPageReady = () => hideOverlay();
-        window.addEventListener('page-ready', onPageReady);
-        return () => window.removeEventListener('page-ready', onPageReady);
-    }, []);
+        const contentArea = document.getElementById('content-area');
+        if (contentArea) {
+            contentArea.style.opacity = '1';
+            contentArea.style.transition = '';
+        }
+    });
 
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
@@ -60,10 +21,22 @@ export default function NavigationLoading() {
             const href = link.getAttribute('href');
             if (!href || href.startsWith('http') || href.startsWith('//') || href.startsWith('#')) return;
             if (href === window.location.pathname + window.location.search) return;
-            if (link.getAttribute('aria-disabled') === 'true') return;
 
-            showOverlay();
-            safetyTimer = setTimeout(hideOverlay, 3000);
+            const contentArea = document.getElementById('content-area');
+            if (contentArea) {
+                contentArea.style.transition = 'opacity 0.15s';
+                contentArea.style.opacity = '0.4';
+            }
+
+            // Safety: always restore after 800ms max
+            if (fadeTimer) clearTimeout(fadeTimer);
+            fadeTimer = setTimeout(() => {
+                const el = document.getElementById('content-area');
+                if (el) {
+                    el.style.opacity = '1';
+                    el.style.transition = '';
+                }
+            }, 800);
         };
 
         document.addEventListener('click', handleClick, true);

@@ -15,7 +15,7 @@ export default function CategorySidebar({categoryStats}: CategorySidebarProps) {
                     {siteConfig.categories.map(category => (
                         <li key={category.slug}>
                             <Link href={`/category/${category.slug}`}
-                                  prefetch={true}
+                                  prefetch={false}
                                   className="transition-colors hover:text-primary">
                                 {category.name} ({categoryStats[category.slug] || 0})
                             </Link>
