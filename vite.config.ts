@@ -3,6 +3,9 @@ import vinext from "vinext";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
+  optimizeDeps: {
+    include: ["react/jsx-runtime", "react/jsx-dev-runtime", "react", "react-dom", "nprogress"],
+  },
   build: {
     rollupOptions: {
       onwarn(warning, defaultHandler) {
