@@ -111,12 +111,7 @@ export default function RootLayout({children}: {
             <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
             <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
             <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
-            {process.env.NODE_ENV === 'production' && (
-                <>
-                    <link rel="dns-prefetch" href="https://vitals.vercel-analytics.com" />
-                    <link rel="preconnect" href="https://vitals.vercel-analytics.com" crossOrigin="anonymous" />
-                </>
-            )}
+            {/* Vercel Analytics 已移除 — 现在运行在 Cloudflare Workers */}
             
             {/* 主题初始化脚本 - 必须在所有CSS之前执行以防止闪动 */}
             <script dangerouslySetInnerHTML={{

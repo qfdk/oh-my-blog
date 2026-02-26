@@ -3,7 +3,8 @@ import styles from "./category.module.css";
 import {getAllPosts} from "@/lib/posts.server";
 import {notFound} from "next/navigation";
 import type {Metadata} from "next";
-import {categoryNames} from "@/lib/constants";
+import {categoryNames, siteConfig} from "@/lib/constants";
+import Link from "next/link";
 import PageReady from "@/components/PageReady";
 
 type MetadataProps = {
@@ -14,19 +15,24 @@ type MetadataProps = {
 export async function generateMetadata(
     {params}: MetadataProps
 ): Promise<Metadata> {
+    const slug = (await params).slug;
+    const name = categoryNames[slug];
+    if (!name) return { title: "分类未找到" };
     return {
-        title: `${categoryNames[(await params).slug]} - 分类`,
-        description: `查看 ${categoryNames[(await params).slug]} 分类下的所有文章`
+        title: `${name} - 分类`,
+        description: `查看 ${name} 分类下的所有文章`
     };
 }
 
 export default async function Page({params}: { params: { slug: string } }) {
     const slug = (await params).slug;
-    const posts = (await getAllPosts()).filter(post => post.category === slug);
+    const validSlugs = siteConfig.categories.map(c => c.slug);
 
-    if (posts.length === 0) {
+    if (!validSlugs.includes(slug)) {
         notFound();
     }
+
+    const posts = (await getAllPosts()).filter(post => post.category === slug);
 
     return (
         <article className={styles.article}>
@@ -35,21 +41,25 @@ export default async function Page({params}: { params: { slug: string } }) {
                 <span className={styles.count}>({posts.length})</span>
             </h1>
 
-            <div className={styles.list}>
-                {posts
-                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-                    .map(post => (
-                        <div key={post.id} className={styles.item}>
-                            <a href={`/posts/${post.id}`} className={styles.link}>
-                                {post.title}
-                            </a>
-                            <span className={styles.date}>
-                                {post.date}
-                            </span>
-                        </div>
-                    ))
-                }
-            </div>
+            {posts.length === 0 ? (
+                <div className={styles.empty}>该分类下暂无文章</div>
+            ) : (
+                <div className={styles.list}>
+                    {posts
+                        .sort((a, b) => b.rawDate.localeCompare(a.rawDate))
+                        .map(post => (
+                            <div key={post.id} className={styles.item}>
+                                <Link href={`/posts/${post.id}`} className={styles.link} prefetch={false}>
+                                    {post.title}
+                                </Link>
+                                <span className={styles.date}>
+                                    {post.date}
+                                </span>
+                            </div>
+                        ))
+                    }
+                </div>
+            )}
             <PageReady/>
         </article>
     );

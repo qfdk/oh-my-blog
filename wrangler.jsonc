@@ -13,6 +13,9 @@
   "images": {
     "binding": "IMAGES"
   },
+  "routes": [
+    { "pattern": "blog.qfdk.me", "custom_domain": true }
+  ],
   "kv_namespaces": [
     {
       "binding": "BLOG_POSTS",

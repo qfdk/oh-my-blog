@@ -87,3 +87,14 @@
 :global(.dark) .date {
     color: #9ca3af;
 }
+
+.empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+    font-size: 15px;
+}
+
+:global(.dark) .empty {
+    color: #6b7280;
+}
