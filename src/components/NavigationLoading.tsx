@@ -9,11 +9,12 @@ NProgress.configure({
     trickleSpeed: 100,
 });
 
-function isInternalLink(link: HTMLAnchorElement): boolean {
+function shouldShowProgress(link: HTMLAnchorElement): boolean {
     const href = link.getAttribute('href');
     if (!href || href.startsWith('http') || href.startsWith('//') || href.startsWith('#')) return false;
     if (href === window.location.pathname + window.location.search) return false;
     if (link.getAttribute('aria-disabled') === 'true') return false;
+    if (link.closest('[data-pagination]')) return false;
     return true;
 }
 
@@ -25,8 +26,8 @@ export default function NavigationLoading() {
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
             const link = (e.target as HTMLElement).closest('a');
-            if (!link || !isInternalLink(link)) return;
-            NProgress.start();
+            if (!link || !shouldShowProgress(link)) return;
+            setTimeout(() => NProgress.start(), 0);
         };
 
         document.addEventListener('click', handleClick, true);

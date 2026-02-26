@@ -1,14 +1,9 @@
-'use client';
-
-import Link from 'next/link';
-
 interface PaginationProps {
     currentPage: number;
     totalPages: number;
 }
 
 export default function Pagination({ currentPage, totalPages }: PaginationProps) {
-    // 如果只有一页，不显示分页
     if (totalPages <= 1) {
         return null;
     }
@@ -23,81 +18,76 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
         let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
         const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
 
-        // 调整起始页面，确保显示足够的页码
         if (endPage - startPage + 1 < maxPagesToShow) {
             startPage = Math.max(1, endPage - maxPagesToShow + 1);
         }
 
-        const createPageButton = (page: number) => {
-            const isActive = currentPage === page;
-
-            return (
-                <Link
-                    key={`page-${page}`}
-                    href={getPageUrl(page)}
-                    onClick={(e) => {
-                        if (isActive) {
-                            e.preventDefault();
-                        }
-                    }}
-                    className={`pagination-number ${isActive ? 'active' : ''}`}
-                    aria-current={isActive ? 'page' : undefined}
-                    aria-disabled={isActive}
-                >
-                    {page}
-                </Link>
-            );
-        };
-
-        // 如果不是从第1页开始，显示第1页和省略号
-        if (startPage > 1) {
-            pages.push(createPageButton(1));
-            if (startPage > 2) {
-                pages.push(<span key="dots1" className="pagination-dots">...</span>);
-            }
-        }
-
-        // 显示页码范围
         for (let i = startPage; i <= endPage; i++) {
-            pages.push(createPageButton(i));
+            const isActive = currentPage === i;
+            pages.push(
+                isActive ? (
+                    <span
+                        key={`page-${i}`}
+                        className="pagination-number active"
+                        aria-current="page"
+                    >
+                        {i}
+                    </span>
+                ) : (
+                    <a
+                        key={`page-${i}`}
+                        href={getPageUrl(i)}
+                        className="pagination-number"
+                    >
+                        {i}
+                    </a>
+                )
+            );
         }
 
-        // 如果不是到最后一页，显示省略号和最后一页
+        if (startPage > 1) {
+            if (startPage > 2) {
+                pages.unshift(<span key="dots1" className="pagination-dots">...</span>);
+            }
+            pages.unshift(
+                currentPage === 1 ? (
+                    <span key="page-1" className="pagination-number active" aria-current="page">1</span>
+                ) : (
+                    <a key="page-1" href="/" className="pagination-number">1</a>
+                )
+            );
+        }
+
         if (endPage < totalPages) {
             if (endPage < totalPages - 1) {
                 pages.push(<span key="dots2" className="pagination-dots">...</span>);
             }
-            pages.push(createPageButton(totalPages));
+            pages.push(
+                <a key={`page-${totalPages}`} href={getPageUrl(totalPages)} className="pagination-number">
+                    {totalPages}
+                </a>
+            );
         }
 
         return pages;
     };
 
     return (
-        <div className="pagination">
-            {/* 上一页 */}
+        <div className="pagination" data-pagination>
             {currentPage > 1 && (
-                <Link
-                    href={getPageUrl(currentPage - 1)}
-                    className="pagination-nav"
-                >
+                <a href={getPageUrl(currentPage - 1)} className="pagination-nav">
                     ← 上一页
-                </Link>
+                </a>
             )}
 
-            {/* 页码 */}
             <div className="pagination-numbers">
                 {renderPageNumbers()}
             </div>
 
-            {/* 下一页 */}
             {currentPage < totalPages && (
-                <Link
-                    href={getPageUrl(currentPage + 1)}
-                    className="pagination-nav"
-                >
+                <a href={getPageUrl(currentPage + 1)} className="pagination-nav">
                     下一页 →
-                </Link>
+                </a>
             )}
         </div>
     );
