@@ -1,5 +1,5 @@
 "use client";
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import NProgress from 'nprogress';
 
 NProgress.configure({
@@ -19,12 +19,16 @@ function shouldShowProgress(link: HTMLAnchorElement): boolean {
 }
 
 export default function NavigationLoading() {
+    const ready = useRef(false);
+
     useEffect(() => {
         NProgress.done();
+        ready.current = true;
     });
 
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
+            if (!ready.current) return;
             const link = (e.target as HTMLElement).closest('a');
             if (!link || !shouldShowProgress(link)) return;
             setTimeout(() => NProgress.start(), 0);
