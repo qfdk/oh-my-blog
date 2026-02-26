@@ -24,18 +24,36 @@ export default function NavigationLoading() {
     useEffect(() => {
         NProgress.done();
         ready.current = true;
-    });
 
-    useEffect(() => {
+        // Hook vinext RSC 导航，在导航完成后结束进度条
+        const win = window as Record<string, unknown>;
+        const original = win.__VINEXT_RSC_NAVIGATE__ as ((url: string) => Promise<void>) | undefined;
+        if (original) {
+            win.__VINEXT_RSC_NAVIGATE__ = async (url: string) => {
+                try {
+                    await original(url);
+                } finally {
+                    NProgress.done();
+                }
+            };
+        }
+
+        const done = () => NProgress.done();
+        window.addEventListener('page-ready', done);
+        window.addEventListener('popstate', done);
+
         const handleClick = (e: MouseEvent) => {
             if (!ready.current) return;
             const link = (e.target as HTMLElement).closest('a');
             if (!link || !shouldShowProgress(link)) return;
-            setTimeout(() => NProgress.start(), 0);
+            NProgress.start();
         };
-
         document.addEventListener('click', handleClick, true);
+
         return () => {
+            if (original) win.__VINEXT_RSC_NAVIGATE__ = original;
+            window.removeEventListener('page-ready', done);
+            window.removeEventListener('popstate', done);
             document.removeEventListener('click', handleClick, true);
         };
     }, []);
