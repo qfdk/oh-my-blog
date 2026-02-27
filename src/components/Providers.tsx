@@ -1,15 +1,9 @@
-// src/components/Providers.tsx
 "use client";
 
 import {ThemeProvider} from "next-themes";
-import {type ReactNode, useEffect} from "react";
-import {initPerformanceOptimizations} from "@/lib/performance";
+import {type ReactNode} from "react";
 
 export function Providers({children}: { children: ReactNode }) {
-    useEffect(() => {
-        initPerformanceOptimizations();
-    }, []);
-
     return (
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}

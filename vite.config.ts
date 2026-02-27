@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import vinext from "vinext";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { execSync } from "child_process";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync, rmSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
@@ -35,5 +35,12 @@ export default defineConfig({
         childEnvironments: ["ssr"],
       },
     }),
+    {
+      name: "strip-dev-vars",
+      closeBundle() {
+        const p = join(__dirname, "dist/server/.dev.vars");
+        if (existsSync(p)) rmSync(p);
+      },
+    },
   ],
 });

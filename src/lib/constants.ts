@@ -31,11 +31,10 @@ export const siteConfig = {
             description: "全球最大的代码托管平台"
         },
         {
-            name: "Next.js",
-            url: "https://nextjs.org",
-            description: "React 框架，用于生产环境的全栈开发"
+            name: "Vinext",
+            url: "https://github.com/cloudflare/vinext",
+            description: "Vite 插件，在 Cloudflare Workers 上运行 Next.js"
         }
     ]
 };
 
-export const categoryNames: Record<string, string> = Object.fromEntries(siteConfig.categories.map(category => [category.slug, category.name]));

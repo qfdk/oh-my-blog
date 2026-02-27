@@ -1,82 +1,25 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# env files (can opt-in for commiting if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-.idea
-
-**/.claude/settings.local.json
 
 # build output
 /dist
 
+# env & secrets
+.env*
+.dev.vars
+
 # wrangler
 .wrangler/
 
-# AI editors/tools
-.agent/
-.agents/
-.claude/
-.cline/
-.codebuddy/
-.commandcode/
-.continue/
-.crush/
-.factory/
-.goose/
-.junie/
-.kilocode/
-.kiro/
-.kode/
-.mcpjam/
-.mux/
-.neovate/
-.openhands/
-.pi/
-.pochi/
-.qoder/
-.qwen/
-.roo/
-.trae/
-.windsurf/
-.zencoder/
-skills/
-skills-lock.json
-
 # misc
-.node-version
+.DS_Store
+*.pem
+*.tsbuildinfo
+
+# debug
+npm-debug.log*
+
+# IDE & AI editors
+.idea
+.claude/
+**/.claude/settings.local.json

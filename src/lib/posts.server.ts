@@ -1,4 +1,5 @@
 import { env } from "cloudflare:workers";
+import { siteConfig } from "./constants";
 
 interface PostMeta {
     id: string;
@@ -17,15 +18,27 @@ const formatDate = (date: Date) => {
     return `${year}年${month}月${day}日`;
 };
 
+export async function getCategories(): Promise<{ slug: string; name: string }[]> {
+    const raw = await env.BLOG_POSTS.get("categories:index", { type: "json" }) as { slug: string; name: string }[] | null;
+    return raw && Array.isArray(raw) ? raw : siteConfig.categories;
+}
+
 async function fetchPostIndex() {
-    const raw = await env.BLOG_POSTS.get("posts:index", { type: "json" }) as PostMeta[] | null;
+    const [raw, categories] = await Promise.all([
+        env.BLOG_POSTS.get("posts:index", { type: "json" }) as Promise<PostMeta[] | null>,
+        getCategories(),
+    ]);
     if (!raw || !Array.isArray(raw)) return [];
+
+    const categoryMap: Record<string, string> = Object.create(null);
+    for (const c of categories) categoryMap[c.slug] = c.name;
 
     return raw.map(meta => ({
         id: meta.id,
         title: meta.title,
-        date: formatDate(new Date(meta.date)),
+        date: formatDate(new Date(`${meta.date}T00:00:00Z`)),
         category: meta.category,
+        categoryName: categoryMap[meta.category] || meta.category,
         excerpt: meta.excerpt,
         rawDate: meta.date,
     }));
@@ -37,10 +50,9 @@ export async function getAllPosts() {
 
 export async function getCategoryStats() {
     const posts = await getAllPosts();
-    return posts.reduce((acc, post) => {
-        acc[post.category] = (acc[post.category] || 0) + 1;
-        return acc;
-    }, {} as Record<string, number>);
+    const stats: Record<string, number> = Object.create(null);
+    for (const post of posts) stats[post.category] = (stats[post.category] || 0) + 1;
+    return stats;
 }
 
 export async function getPaginatedPosts(page: number = 1) {
@@ -75,6 +87,7 @@ export async function getPostById(id: string) {
             title: meta.title,
             date: meta.date,
             category: meta.category,
+            categoryName: meta.categoryName,
             content: markdownContent,
             excerpt: meta.excerpt,
         };

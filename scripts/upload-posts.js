@@ -114,6 +114,11 @@ async function main() {
       key: `posts:content:${id}`,
       value: renderedHtml,
     });
+
+    bulkData.push({
+      key: `posts:raw:${id}`,
+      value: content,
+    });
   }
 
   // Sort by date descending

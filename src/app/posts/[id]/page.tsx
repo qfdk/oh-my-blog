@@ -1,7 +1,6 @@
 // src/app/posts/[id]/page.tsx
 import {getAllPosts, getPostById} from "@/lib/posts.server";
 import {notFound} from "next/navigation";
-import {categoryNames} from "@/lib/constants";
 import {Metadata} from "next";
 import ArticleContent from "@/components/ArticleContent";
 import PageReady from "@/components/PageReady";
@@ -42,10 +41,10 @@ export default async function Post({params}: { params: { id: string } }) {
                 <h1 className="title">{post.title}</h1>
                 <div className="meta">
                     <time dateTime={post.date}>发布于 {post.date}</time>
-                    {post.category && (
+                    {post.category && post.categoryName && (
                         <>
                             <span className={styles.metaSeparator}>|</span>
-                            <span>分类：{categoryNames[post.category]}</span>
+                            <span>分类：{post.categoryName}</span>
                         </>
                     )}
                 </div>
