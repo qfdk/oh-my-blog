@@ -12,11 +12,11 @@ oh-my-blog 是一个基于 Next.js 的个人博客系统，通过 **vinext** (Vi
 # 安装依赖
 pnpm install
 
-# 本地开发 (vinext + Vite)
-pnpm run dev:vinext
+# 本地开发
+pnpm dev
 
-# 构建 (vinext)
-pnpm run build:vinext
+# 构建
+pnpm build
 
 # 上传本地文章到 KV
 pnpm run upload-posts
@@ -31,7 +31,7 @@ pnpm run deploy
 
 - **vinext**: Vite-based Next.js reimplementation，将 Next.js App Router 运行在 Cloudflare Workers 上
 - **Vite 插件**: `vinext()` + `cloudflare()` (在 `vite.config.ts` 中配置)
-- **Worker 入口**: `worker/index.ts` — 处理图片优化请求，其余请求委托给 vinext
+- **Worker 入口**: `worker/index.ts` — Admin 认证拦截 + 图片优化 + vinext 委托
 
 ### 数据存储 (Cloudflare KV)
 
@@ -64,7 +64,10 @@ pnpm run deploy
 - **路由**: `/admin` (文章列表)、`/admin/new` (新建)、`/admin/edit/[id]` (编辑)、`/admin/categories` (分类)
 - **API**: `/api/admin/posts` (GET/POST)、`/api/admin/posts/[id]` (GET/PUT/DELETE)、`/api/admin/categories` (GET/PUT)
 - **架构**: 服务端页面提供初始数据，客户端组件通过 `useEffect` 从 API 获取最新数据
-- 建议通过 Cloudflare Access 保护 admin 路径
+- **认证**: Worker 层 Basic Auth + Bearer Token（`worker/index.ts` 中的 `checkAdminAuth()`）
+  - 凭据通过 Cloudflare Worker Secrets 配置（`ADMIN_USER` + `ADMIN_PASSWORD`）
+  - 本地开发使用 `.dev.vars` 文件（构建时自动清理，不会泄露）
+  - 安全特性：timing-safe 比较、CSRF Origin 校验、atob 异常处理
 
 ### 前台页面
 
