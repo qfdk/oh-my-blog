@@ -73,53 +73,22 @@ pnpm run upload-posts
 
 ### 4. 配置后台认证
 
-后台管理 (`/admin`) 和 API (`/api/admin`) 在 **Worker 层** 进行认证拦截，请求到达 vinext 之前就已完成鉴权。
+后台管理 (`/admin`) 和 API (`/api/admin`) 通过 **Cloudflare Access** 进行认证，请求到达 Worker 之前就已完成鉴权。
 
-#### 为什么选择 Worker 层 Basic Auth？
+#### Cloudflare Access
 
-| 方案 | 优点 | 缺点 |
-|------|------|------|
-| **Worker Basic Auth** (当前方案) | 零成本、零依赖、代码可控 | 浏览器原生登录框较简陋 |
-| Cloudflare Access | 漂亮的登录页、支持 SSO/OAuth | 免费版限 50 用户、需配置 Zero Trust |
+通过 Cloudflare Zero Trust 控制面板配置 Access Application，保护 `/admin` 和 `/api/admin` 路径。认证方式为邮箱 One-Time PIN（免费）。
 
-个人博客场景下 Worker Basic Auth 足够使用。如果需要 SSO、多用户管理等高级功能，可迁移到 Cloudflare Access。
-
-#### 设置认证密钥
-
-通过 Cloudflare Worker Secrets 设置（加密存储，不会出现在代码或构建产物中）：
-
-```bash
-# 设置后台用户名
-echo "your-username" | pnpm wrangler secret put ADMIN_USER
-
-# 设置后台密码
-echo "your-password" | pnpm wrangler secret put ADMIN_PASSWORD
-```
-
-#### 本地开发
-
-在项目根目录创建 `.dev.vars` 文件：
-
-```
-ADMIN_USER=admin
-ADMIN_PASSWORD=dev-only-password
-```
-
-> `.dev.vars` 已被 `.gitignore` 忽略，构建时会被 vite 插件自动清理，不会泄露到部署产物中。
-
-#### 认证方式
-
-- **浏览器访问 `/admin`**: 自动弹出 Basic Auth 登录对话框
-- **API Bearer Token**: `Authorization: Bearer <ADMIN_PASSWORD>`
-- **API Basic Auth**: `Authorization: Basic base64(user:password)`
-
-如果不设置 `ADMIN_USER`，默认用户名为 `admin`。
+配置步骤：
+1. 登录 [Cloudflare Zero Trust](https://one.dash.cloudflare.com/)
+2. 进入 Access → Applications → 创建 Self-hosted Application
+3. Application domain 设为博客域名，路径填 `/admin` 和 `/api/admin`
+4. 创建 Policy，允许指定邮箱访问
 
 #### 安全特性
 
-- **timing-safe 字符串比较**: 防止时序攻击
+- **Cloudflare Access**: 零信任认证，在 Worker 之前拦截未授权请求
 - **CSRF Origin 校验**: 写操作 (POST/PUT/DELETE) 验证 Origin 头
-- **atob 异常处理**: 防止恶意 Base64 导致 DoS
 - **Cache-Control: no-store**: 所有 admin API 响应不缓存
 
 ### 5. 部署到 Cloudflare Workers

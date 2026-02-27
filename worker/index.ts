@@ -18,66 +18,9 @@ interface Env {
     };
   };
   BLOG_POSTS: KVNamespace;
-  ADMIN_USER?: string;
-  ADMIN_PASSWORD?: string;
-}
-
-function timingSafeEqual(a: string, b: string): boolean {
-  const enc = new TextEncoder();
-  const aBytes = enc.encode(a);
-  const bBytes = enc.encode(b);
-  const len = Math.max(aBytes.length, bBytes.length);
-  let diff = aBytes.length ^ bBytes.length;
-  for (let i = 0; i < len; i++) {
-    diff |= (aBytes[i] ?? 0) ^ (bBytes[i] ?? 0);
-  }
-  return diff === 0;
 }
 
 const NO_STORE = { "Cache-Control": "no-store" };
-
-function checkAdminAuth(request: Request, env: Env): Response | null {
-  const secret = env.ADMIN_PASSWORD;
-  if (!secret) {
-    return new Response("Admin access not configured", { status: 403, headers: NO_STORE });
-  }
-
-  const header = (request.headers.get("Authorization") || "").trim();
-
-  // Bearer Token: Authorization: Bearer <token>
-  if (header.startsWith("Bearer ")) {
-    if (timingSafeEqual(header.slice(7), secret)) return null;
-    return new Response("Unauthorized", { status: 401, headers: NO_STORE });
-  }
-
-  // Basic Auth: Authorization: Basic base64(user:password)
-  if (header.startsWith("Basic ")) {
-    let decoded: string;
-    try {
-      decoded = atob(header.slice(6));
-    } catch {
-      return new Response("Unauthorized", {
-        status: 401,
-        headers: { ...NO_STORE, "WWW-Authenticate": 'Basic realm="Blog Admin"' },
-      });
-    }
-
-    const sep = decoded.indexOf(":");
-    if (sep >= 0) {
-      const username = decoded.slice(0, sep);
-      const password = decoded.slice(sep + 1);
-      const expectedUser = env.ADMIN_USER || "admin";
-      if (timingSafeEqual(username, expectedUser) && timingSafeEqual(password, secret)) {
-        return null;
-      }
-    }
-  }
-
-  return new Response("Unauthorized", {
-    status: 401,
-    headers: { ...NO_STORE, "WWW-Authenticate": 'Basic realm="Blog Admin"' },
-  });
-}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -89,12 +32,6 @@ export default {
       if (origin && origin !== url.origin) {
         return new Response("Forbidden", { status: 403, headers: NO_STORE });
       }
-    }
-
-    // Protect admin routes with Basic Auth / Bearer Token
-    if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api/admin")) {
-      const denied = checkAdminAuth(request, env);
-      if (denied) return denied;
     }
 
     // Image optimization via Cloudflare Images binding
