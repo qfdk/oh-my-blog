@@ -85,8 +85,8 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vinext:
-        specifier: ^0.0.12
-        version: 0.0.12(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@20.19.25)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))(webpack@5.105.2(esbuild@0.27.3))
+        specifier: ^0.0.13
+        version: 0.0.13(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@20.19.25)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))(webpack@5.105.2(esbuild@0.27.3))
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@20.19.25)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)
@@ -807,8 +807,8 @@ packages:
   '@types/node@20.19.25':
     resolution: {integrity: sha512-ZsJzA5thDQMSQO788d7IocwwQbI8B5OPzmqNvpf3NY/+MHDAS759Wo0gd2WQeXYt5AAAQjzcrTVC6SKCuYgoCQ==}
 
-  '@types/node@20.19.34':
-    resolution: {integrity: sha512-by3/Z0Qp+L9cAySEsSNNwZ6WWw8ywgGLPQGgbQDhNRSitqYgkgp4pErd23ZSCavbtUA2CN4jQtoB3T8nk4j3Rg==}
+  '@types/node@20.19.35':
+    resolution: {integrity: sha512-Uarfe6J91b9HAUXxjvSOdiO2UPOKLm07Q1oh0JHxoZ1y8HoqxDAu3gVrsrOHeiio0kSsoVBt4wFrKOm0dKxVPQ==}
 
   '@types/nprogress@0.2.3':
     resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
@@ -2849,8 +2849,8 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vinext@0.0.12:
-    resolution: {integrity: sha512-cZfmxKMwDasjQ5MuQZhf0ZPsyo/+EAd70W2NxaGdkfzd16qrGSF/RD7RvQNuO/dCh04n7CF+B2yQCBafN9qHTA==}
+  vinext@0.0.13:
+    resolution: {integrity: sha512-UwUCMpGlRDGttAcI1hCa86iMGqAHO23rpPFH0g0/b0Ia5WTPq0z28C68KXXm/rCrol5aPw/QKnWY3JYnslW2eQ==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -3563,7 +3563,7 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/node@20.19.34':
+  '@types/node@20.19.35':
     dependencies:
       undici-types: 6.21.0
 
@@ -4934,7 +4934,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.19.34
+      '@types/node': 20.19.35
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -5966,7 +5966,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vinext@0.0.12(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@20.19.25)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))(webpack@5.105.2(esbuild@0.27.3)):
+  vinext@0.0.13(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@20.19.25)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))(webpack@5.105.2(esbuild@0.27.3)):
     dependencies:
       '@unpic/react': 1.0.2(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@vercel/og': 0.8.6
