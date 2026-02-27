@@ -158,7 +158,10 @@ export default function RootLayout({children}: {
 
                 <footer>
                     <p>{siteConfig.footer}</p>
-                    <p style={{fontSize: '12px', opacity: 0.5, marginTop: '4px'}}>Powered by Vinext</p>
+                    <p style={{fontSize: '12px', opacity: 0.5, marginTop: '4px'}}>
+                        Powered by <a href="https://github.com/cloudflare/vinext" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'underline'}}>Vinext</a>
+                        {' '}v{__VINEXT_VERSION__} ({__GIT_HASH__})
+                    </p>
                 </footer>
             </div>
             <Suspense fallback={null}>
