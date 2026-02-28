@@ -9,30 +9,28 @@
     "upload-posts": "node scripts/upload-posts.js"
   },
   "dependencies": {
-    "lucide-react": "^0.454.0",
-    "markdown-it": "13.0.2",
+    "lucide-react": "^0.575.0",
+    "markdown-it": "14.1.1",
     "next-themes": "^0.4.6",
     "nprogress": "^0.2.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-server-dom-webpack": "^19.2.4",
-    "shiki": "^3.19.0"
+    "shiki": "^4.0.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.25.5",
-    "@types/markdown-it": "^13.0.9",
-    "@types/node": "^20.19.25",
+    "@cloudflare/vite-plugin": "^1.25.6",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^25.3.2",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^18.3.27",
-    "@types/react-dom": "^18.3.7",
-    "@vitejs/plugin-rsc": "^0.5.20",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-rsc": "^0.5.21",
     "gray-matter": "^4.0.3",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.18",
-    "typescript": "^5.9.3",
-    "vinext": "^0.0.14",
+"typescript": "^5.9.3",
+    "vinext": "^0.0.15",
     "vite": "^7.3.1",
-    "wrangler": "^4.68.1"
+    "wrangler": "^4.69.0"
   },
   "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748",
   "type": "module",
@@ -40,6 +38,9 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "workerd"
-    ]
+    ],
+    "overrides": {
+      "@types/node": "$@types/node"
+    }
   }
 }

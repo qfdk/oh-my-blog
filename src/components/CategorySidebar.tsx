@@ -18,8 +18,7 @@ export default function CategorySidebar({categories, categoryStats}: CategorySid
                     {cats.map(category => (
                         <li key={category.slug}>
                             <Link href={`/category/${category.slug}`}
-                                  prefetch={false}
-                                  className="transition-colors hover:text-primary">
+                                  prefetch={false}>
                                 {category.name} ({categoryStats[category.slug] || 0})
                             </Link>
                         </li>
@@ -31,8 +30,7 @@ export default function CategorySidebar({categories, categoryStats}: CategorySid
                 <ul>
                     {siteConfig.friends.map(friend => (
                         <li key={friend.url}>
-                            <a href={friend.url}
-                               className="transition-colors hover:text-primary">
+                            <a href={friend.url}>
                                 {friend.name}
                             </a>
                         </li>
