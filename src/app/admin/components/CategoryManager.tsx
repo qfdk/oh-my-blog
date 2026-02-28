@@ -4,11 +4,7 @@ import { useState, useEffect } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import Toast from "./Toast";
 import styles from "../admin.module.css";
-
-interface CategoryItem {
-    slug: string;
-    name: string;
-}
+import type { CategoryItem } from "@/types/post";
 
 export default function CategoryManager({ initialCategories }: { initialCategories: CategoryItem[] }) {
     const [categories, setCategories] = useState(initialCategories);
@@ -90,7 +86,7 @@ export default function CategoryManager({ initialCategories }: { initialCategori
                     type="text"
                     className={errors.has("slug") ? styles.fieldError : undefined}
                     value={slug}
-                    onChange={(e) => { setSlug(e.target.value); errors.delete("slug"); setErrors(new Set(errors)); }}
+                    onChange={(e) => { setSlug(e.target.value); setErrors(prev => { const next = new Set(prev); next.delete("slug"); return next; }); }}
                     placeholder="slug (如: tech)"
                     disabled={saving}
                 />
@@ -98,7 +94,7 @@ export default function CategoryManager({ initialCategories }: { initialCategori
                     type="text"
                     className={errors.has("name") ? styles.fieldError : undefined}
                     value={name}
-                    onChange={(e) => { setName(e.target.value); errors.delete("name"); setErrors(new Set(errors)); }}
+                    onChange={(e) => { setName(e.target.value); setErrors(prev => { const next = new Set(prev); next.delete("name"); return next; }); }}
                     placeholder="显示名称 (如: 技术分享)"
                     disabled={saving}
                 />

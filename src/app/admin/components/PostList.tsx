@@ -5,14 +5,7 @@ import Link from "next/link";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
 import Toast from "./Toast";
 import styles from "../admin.module.css";
-
-interface PostMeta {
-    id: string;
-    title: string;
-    date: string;
-    category: string;
-    excerpt: string;
-}
+import type { PostMeta } from "@/types/post";
 
 interface Props {
     initialPosts: PostMeta[];

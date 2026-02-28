@@ -1,11 +1,7 @@
 import { env } from "cloudflare:workers";
 import { renderMarkdown, extractExcerpt } from "./markdown-utils";
 import { siteConfig } from "./constants";
-
-interface CategoryItem {
-    slug: string;
-    name: string;
-}
+import type { PostMeta, CategoryItem } from "@/types/post";
 
 export async function getCategories(): Promise<CategoryItem[]> {
     const raw = await env.BLOG_POSTS.get("categories:index", { type: "json" }) as CategoryItem[] | null;
@@ -14,14 +10,6 @@ export async function getCategories(): Promise<CategoryItem[]> {
 
 export async function saveCategories(categories: CategoryItem[]): Promise<void> {
     await env.BLOG_POSTS.put("categories:index", JSON.stringify(categories));
-}
-
-interface PostMeta {
-    id: string;
-    title: string;
-    date: string;
-    category: string;
-    excerpt: string;
 }
 
 async function getIndex(): Promise<PostMeta[]> {

@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Save, Bold, Italic, Heading, Link2, ImageIcon, Code } from "lucide-react";
 import Toast from "./Toast";
 import styles from "../admin.module.css";
+import type { CategoryItem } from "@/types/post";
 
 interface PostData {
     id: string;
@@ -11,11 +12,6 @@ interface PostData {
     date: string;
     category: string;
     content: string;
-}
-
-interface CategoryItem {
-    slug: string;
-    name: string;
 }
 
 interface Props {

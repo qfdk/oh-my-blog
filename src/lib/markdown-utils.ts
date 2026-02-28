@@ -1,7 +1,9 @@
 import type MarkdownIt from "markdown-it";
 import {codeToHtml} from "shiki";
 
-// 单例模式，确保只创建一个parser实例
+const DEFAULT_IMG_WIDTH = 800;
+const DEFAULT_IMG_HEIGHT = 450;
+
 let markdownParserInstance: MarkdownIt | null = null;
 
 // 使用正则匹配代码块并高亮
@@ -49,8 +51,8 @@ const optimizeImages = (html: string): string => {
         const heightMatch = match.match(/height=["'](\d+)["']/i);
         const altMatch = match.match(/alt=["']([^"']*)["']/i);
 
-        const width = widthMatch ? parseInt(widthMatch[1], 10) : 800;
-        const height = heightMatch ? parseInt(heightMatch[1], 10) : 450;
+        const width = widthMatch ? parseInt(widthMatch[1], 10) : DEFAULT_IMG_WIDTH;
+        const height = heightMatch ? parseInt(heightMatch[1], 10) : DEFAULT_IMG_HEIGHT;
         const alt = altMatch ? altMatch[1] : '';
 
         // 构建优化的图片标签，保留原始的响应式样式

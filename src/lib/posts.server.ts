@@ -1,13 +1,6 @@
 import { env } from "cloudflare:workers";
 import { siteConfig } from "./constants";
-
-interface PostMeta {
-    id: string;
-    title: string;
-    date: string;
-    category: string;
-    excerpt: string;
-}
+import type { PostMeta } from "@/types/post";
 
 const POSTS_PER_PAGE = 4;
 
