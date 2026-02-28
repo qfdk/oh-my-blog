@@ -1,40 +1,84 @@
 import type MarkdownIt from "markdown-it";
-import {codeToHtml} from "shiki";
+import {createHighlighter, type BundledLanguage} from "shiki/bundle/web";
 
 const DEFAULT_IMG_WIDTH = 800;
 const DEFAULT_IMG_HEIGHT = 450;
 
 let markdownParserInstance: MarkdownIt | null = null;
 
+const SHIKI_LANGS: BundledLanguage[] = [
+    "bash", "javascript", "typescript", "json", "html", "css",
+    "java", "python", "yaml", "sql", "markdown",
+];
+
+const SUPPORTED_LANGS = new Set<string>(SHIKI_LANGS);
+
+// 常见 fence 别名 → 已注册语言
+const LANG_ALIASES: Record<string, BundledLanguage> = {
+    js: "javascript", ts: "typescript", sh: "bash", shell: "bash",
+    yml: "yaml", md: "markdown", py: "python", htm: "html",
+};
+
+let highlighterPromise: ReturnType<typeof createHighlighter> | null = null;
+
+function getHighlighter() {
+    if (!highlighterPromise) {
+        highlighterPromise = createHighlighter({
+            langs: SHIKI_LANGS,
+            themes: ["github-light", "github-dark"],
+        });
+    }
+    return highlighterPromise;
+}
+
 // 使用正则匹配代码块并高亮
 async function highlightCodeBlocks(html: string): Promise<string> {
-    const codeBlockRegex = /<pre><code class="language-(\w+)">([\s\S]*?)<\/code><\/pre>/g;
+    const codeBlockRegex = /<pre><code class="language-([\w+-]+)">([\s\S]*?)<\/code><\/pre>/g;
     const matches = [...html.matchAll(codeBlockRegex)];
 
-    let result = html;
+    if (matches.length === 0) return html;
+
+    const highlighter = await getHighlighter();
+
+    const replacements: { start: number; end: number; wrapped: string }[] = [];
+
     for (const match of matches) {
         const [fullMatch, lang, code] = match;
+        const start = match.index;
+        if (start == null) continue;
+
+        const normalized = LANG_ALIASES[lang] ?? lang;
+        const effectiveLang = SUPPORTED_LANGS.has(normalized) ? normalized : "text";
+
         try {
-            // 解码 HTML 实体
             const decodedCode = code
                 .replace(/&lt;/g, '<')
                 .replace(/&gt;/g, '>')
                 .replace(/&amp;/g, '&')
                 .replace(/&quot;/g, '"');
 
-            const highlighted = await codeToHtml(decodedCode, {
-                lang,
+            const highlighted = highlighter.codeToHtml(decodedCode, {
+                lang: effectiveLang,
                 themes: {
                     light: 'github-light',
                     dark: 'github-dark',
                 }
             });
 
-            const wrapped = `<div class="code-block-wrapper"><div class="code-scroll">${highlighted}</div></div>`;
-            result = result.replace(fullMatch, wrapped);
+            replacements.push({
+                start,
+                end: start + fullMatch.length,
+                wrapped: `<div class="code-block-wrapper"><div class="code-scroll">${highlighted}</div></div>`,
+            });
         } catch (e) {
-            console.warn(`Failed to highlight ${lang}:`, e);
+            console.warn(`Failed to highlight ${effectiveLang}:`, e);
         }
+    }
+
+    // 从后向前替换，避免索引偏移
+    let result = html;
+    for (const r of replacements.reverse()) {
+        result = result.slice(0, r.start) + r.wrapped + result.slice(r.end);
     }
 
     return result;

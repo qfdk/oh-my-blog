@@ -12,13 +12,13 @@ const formatDate = (date: Date) => {
 };
 
 export async function getCategories(): Promise<{ slug: string; name: string }[]> {
-    const raw = await env.BLOG_POSTS.get("categories:index", { type: "json" }) as { slug: string; name: string }[] | null;
+    const raw = await env.BLOG_POSTS.get("categories:index", { type: "json", cacheTtl: 60 }) as { slug: string; name: string }[] | null;
     return raw && Array.isArray(raw) ? raw : siteConfig.categories;
 }
 
 async function fetchPostIndex() {
     const [raw, categories] = await Promise.all([
-        env.BLOG_POSTS.get("posts:index", { type: "json" }) as Promise<PostMeta[] | null>,
+        env.BLOG_POSTS.get("posts:index", { type: "json", cacheTtl: 60 }) as Promise<PostMeta[] | null>,
         getCategories(),
     ]);
     if (!raw || !Array.isArray(raw)) return [];
@@ -68,10 +68,12 @@ export async function getPaginatedPosts(page: number = 1) {
 
 export async function getPostById(id: string) {
     try {
-        const markdownContent = await env.BLOG_POSTS.get(`posts:content:${id}`);
+        const [markdownContent, allPosts] = await Promise.all([
+            env.BLOG_POSTS.get(`posts:content:${id}`, { cacheTtl: 60 }),
+            getAllPosts(),
+        ] as const);
         if (!markdownContent) return null;
 
-        const allPosts = await getAllPosts();
         const meta = allPosts.find(p => p.id === id);
         if (!meta) return null;
 
