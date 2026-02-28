@@ -135,7 +135,7 @@ export default function RootLayout({children}: {
                 </header>
                 <Navigation/>
 
-                <div className="layout with-sidebar">
+                <main className="layout with-sidebar">
                     <div id="content-area" className={styles.contentWrapper}>
                         <Suspense fallback={<ContentLoading/>}>
                             {children}
@@ -146,7 +146,7 @@ export default function RootLayout({children}: {
                             <SidebarWrapper/>
                         </Suspense>
                     </aside>
-                </div>
+                </main>
 
                 <footer>
                     <p>{siteConfig.footer}</p>

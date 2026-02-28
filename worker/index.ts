@@ -22,6 +22,23 @@ interface Env {
 
 const NO_STORE = { "Cache-Control": "no-store" };
 
+const SECURITY_HEADERS: Record<string, string> = {
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Cross-Origin-Opener-Policy": "same-origin",
+  "Content-Security-Policy":
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'",
+};
+
+function withSecurityHeaders(response: Response): Response {
+  const newResponse = new Response(response.body, response);
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    newResponse.headers.set(key, value);
+  }
+  return newResponse;
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
@@ -45,7 +62,8 @@ export default {
       });
     }
 
-    // Delegate everything else to vinext
-    return handler.fetch(request);
+    // Delegate everything else to vinext, add security headers
+    const response = await handler.fetch(request);
+    return withSecurityHeaders(response);
   },
 };

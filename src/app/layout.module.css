@@ -57,7 +57,7 @@
 
 .footerMeta {
     font-size: 12px;
-    opacity: 0.5;
+    color: var(--meta-color);
     margin-top: 4px;
 }
 
