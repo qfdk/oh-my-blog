@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite dev --port 3001",
-    "build": "vite build",
+    "dev": "vinext dev --port 3001",
+    "build": "vinext build",
     "deploy": "vinext deploy --name oh-my-blog",
-    "upload-posts": "node scripts/upload-posts.js"
+    "upload-posts": "node scripts/upload-posts.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.575.0",
@@ -27,20 +27,10 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-rsc": "^0.5.21",
     "gray-matter": "^4.0.3",
-"typescript": "^5.9.3",
+    "typescript": "^5.9.3",
     "vinext": "^0.0.15",
     "vite": "^7.3.1",
     "wrangler": "^4.69.0"
   },
-  "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748",
-  "type": "module",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "workerd"
-    ],
-    "overrides": {
-      "@types/node": "$@types/node"
-    }
-  }
+  "type": "module"
 }

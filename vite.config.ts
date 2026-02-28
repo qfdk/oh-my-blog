@@ -23,6 +23,7 @@ export default defineConfig({
     rollupOptions: {
       onwarn(warning, defaultHandler) {
         if (warning.message?.includes("sourcemap")) return;
+        if (warning.message?.includes("dynamic import will not move module")) return;
         defaultHandler(warning);
       },
     },
