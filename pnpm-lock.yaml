@@ -61,8 +61,8 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vinext:
-        specifier: ^0.0.16
-        version: 0.0.16(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))(webpack@5.105.2)
+        specifier: 0.0.18
+        version: 0.0.18(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))(webpack@5.105.2)
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)
@@ -1552,8 +1552,8 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vinext@0.0.16:
-    resolution: {integrity: sha512-PTfVFYoiCjSKSgYUpS7g0yAX0O2fu76no705QN0E2ZjU3to23SxGeNP2cmMkSD47tkS7qDtBJoTOWKRoPV2DFw==}
+  vinext@0.0.18:
+    resolution: {integrity: sha512-HTaO+fWYYInbLfRge+TgdEJqyjcV5amwHCUvEI9gp32jGEb/9xS/6NVscgMmjUlAlS4FSmwpgWEv6kwzDuZ2lQ==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -3033,7 +3033,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vinext@0.0.16(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))(webpack@5.105.2):
+  vinext@0.0.18(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))(webpack@5.105.2):
     dependencies:
       '@unpic/react': 1.0.2(next@16.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@vercel/og': 0.8.6
