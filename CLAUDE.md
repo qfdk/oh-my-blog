@@ -90,7 +90,7 @@ pnpm run deploy
 - vinext 是实验性框架，`loading.tsx` 不能作为真正的 Suspense boundary
 - `useSearchParams` 在 vinext 中会导致无限循环 — 避免使用
 - `vite.config.ts` 必须包含 `cloudflare()` 插件才能正常部署
-- 新增路由文件 (`page.tsx`, `loading.tsx`) 后需要重启 dev server
+- ~~新增路由文件后需要重启 dev server~~ (vinext 0.0.19 已修复)
 - 客户端导航不会重新执行服务端组件 — 后台客户端组件需要通过 `useEffect` 从 API 获取最新数据
 
 ## File Organization
