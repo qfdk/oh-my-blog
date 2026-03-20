@@ -1,11 +1,11 @@
 # oh-my-blog
 
-在寻找个人博客解决方案的过程中，我一直在使用 [firekylin](https://github.com/firekylin/firekylin) 作为博客系统。然而，由于项目长期未更新维护，逐渐出现了一些问题。于是我决定利用空闲时间，基于 Next.js 框架开发了一个简洁的博客系统 - oh-my-blog。
+一个基于 [vinext](https://github.com/cloudflare/vinext) 的个人博客系统，运行在 Cloudflare Workers 上。vinext 是 Cloudflare 开发的 Vite-based Next.js 实现，让 Next.js App Router 应用能够原生运行在 Workers 边缘网络。
 
 ## 技术栈
 
-- **框架**: Next.js (通过 [vinext](https://github.com/cloudflare/vinext) 运行于 Cloudflare Workers)
-- **运行时**: Cloudflare Workers
+- **框架**: [vinext](https://github.com/cloudflare/vinext) `0.0.32` — Vite-based Next.js on Cloudflare Workers
+- **运行时**: Cloudflare Workers (边缘计算)
 - **存储**: Cloudflare KV
 - **图片优化**: Cloudflare Images
 - **构建工具**: Vite
@@ -19,7 +19,7 @@
 .
 ├── posts/                    # 本地博客文章 (用于上传到 KV)
 ├── scripts/
-│   └── upload-posts.js       # 将本地 Markdown 上传到 KV
+│   └── upload-posts.mjs      # 将本地 Markdown 上传到 KV
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx        # 全局布局 (导航、侧边栏、页脚)
@@ -73,23 +73,7 @@ pnpm run upload-posts
 
 ### 4. 配置后台认证
 
-后台管理 (`/admin`) 和 API (`/api/admin`) 通过 **Cloudflare Access** 进行认证，请求到达 Worker 之前就已完成鉴权。
-
-#### Cloudflare Access
-
-通过 Cloudflare Zero Trust 控制面板配置 Access Application，保护 `/admin` 和 `/api/admin` 路径。认证方式为邮箱 One-Time PIN（免费）。
-
-配置步骤：
-1. 登录 [Cloudflare Zero Trust](https://one.dash.cloudflare.com/)
-2. 进入 Access → Applications → 创建 Self-hosted Application
-3. Application domain 设为博客域名，路径填 `/admin` 和 `/api/admin`
-4. 创建 Policy，允许指定邮箱访问
-
-#### 安全特性
-
-- **Cloudflare Access**: 零信任认证，在 Worker 之前拦截未授权请求
-- **CSRF Origin 校验**: 写操作 (POST/PUT/DELETE) 验证 Origin 头
-- **Cache-Control: no-store**: 所有 admin API 响应不缓存
+后台管理 (`/admin`) 通过 **Cloudflare Access** (Zero Trust) 保护，认证方式为邮箱 One-Time PIN。详见 [Cloudflare Zero Trust 文档](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps/)。
 
 ### 5. 部署到 Cloudflare Workers
 
@@ -113,10 +97,6 @@ pnpm run deploy
 - 文章的增删改查 (Markdown 编辑器 + 实时预览)
 - 动态分类管理 (添加/删除分类)
 - 表单验证 + Toast 通知
-
-认证方式：
-- **浏览器访问**: 自动弹出 Basic Auth 登录框
-- **API 调用**: 支持 Basic Auth 或 Bearer Token
 
 ## 功能特性
 
