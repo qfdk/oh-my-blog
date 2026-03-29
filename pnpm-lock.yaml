@@ -61,8 +61,8 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vinext:
-        specifier: 0.0.32
-        version: 0.0.32(@vitejs/plugin-react@5.1.4(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)))(@vitejs/plugin-rsc@0.5.21(react-dom@19.2.4(react@19.2.4))(react-server-dom-webpack@19.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(webpack@5.105.2))(react@19.2.4)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)))(next@16.0.7(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-server-dom-webpack@19.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(webpack@5.105.2))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))
+        specifier: 0.0.38
+        version: 0.0.38(@vitejs/plugin-react@5.1.4(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)))(@vitejs/plugin-rsc@0.5.21(react-dom@19.2.4(react@19.2.4))(react-server-dom-webpack@19.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(webpack@5.105.2))(react@19.2.4)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)))(next@16.0.7(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-server-dom-webpack@19.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(webpack@5.105.2))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0))
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)
@@ -1681,14 +1681,14 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vinext@0.0.32:
-    resolution: {integrity: sha512-++s7HvbTbdkE0S0BFB+/en9MyhmrtVVkFBXTvoHL0UCh/lvRV3e0D371nWBy0pnIPYARTKoNFxO/X5waos6DiA==}
+  vinext@0.0.38:
+    resolution: {integrity: sha512-zlQswirXCApDgAFq1eoO/YbRlavGE+Bnowz5vXoQa2EmbFhYg52+T8SZs1QWdOqkbZMhpLIV/iaWvHtkRv2t4Q==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
       '@mdx-js/rollup': ^3.0.0
       '@vitejs/plugin-react': ^5.1.4 || ^6.0.0
-      '@vitejs/plugin-rsc': ^0.5.19
+      '@vitejs/plugin-rsc': ^0.5.21
       react: '>=19.2.0'
       react-dom: '>=19.2.0'
       react-server-dom-webpack: ^19.2.4
@@ -3337,7 +3337,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vinext@0.0.32(@vitejs/plugin-react@5.1.4(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)))(@vitejs/plugin-rsc@0.5.21(react-dom@19.2.4(react@19.2.4))(react-server-dom-webpack@19.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(webpack@5.105.2))(react@19.2.4)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)))(next@16.0.7(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-server-dom-webpack@19.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(webpack@5.105.2))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)):
+  vinext@0.0.38(@vitejs/plugin-react@5.1.4(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)))(@vitejs/plugin-rsc@0.5.21(react-dom@19.2.4(react@19.2.4))(react-server-dom-webpack@19.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(webpack@5.105.2))(react@19.2.4)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)))(next@16.0.7(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-server-dom-webpack@19.2.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(webpack@5.105.2))(react@19.2.4)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)(yaml@2.6.0)):
     dependencies:
       '@unpic/react': 1.0.2(next@16.0.7(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@vercel/og': 0.8.6
