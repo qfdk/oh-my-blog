@@ -44,6 +44,8 @@ body {
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
+    /* 禁用双击缩放手势（iOS Safari 可能忽略 user-scalable=no，此处兜底） */
+    touch-action: manipulation;
 }
 
 .container {
