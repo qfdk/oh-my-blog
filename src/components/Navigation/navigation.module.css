@@ -48,12 +48,16 @@
     transition: transform 0.2s ease;
 }
 
-.iconWrapper:hover {
-    transform: scale(1.05);
-}
+/* 缩放反馈仅用于鼠标设备。触摸设备上 :active 缩小元素会导致
+   touchend 落到元素外，iOS 不再合成 click → 点了高亮却不跳转 */
+@media (hover: hover) and (pointer: fine) {
+    .iconWrapper:hover {
+        transform: scale(1.05);
+    }
 
-.iconWrapper:active {
-    transform: scale(0.95);
+    .iconWrapper:active {
+        transform: scale(0.95);
+    }
 }
 
 .active {
