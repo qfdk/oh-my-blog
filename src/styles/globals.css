@@ -797,10 +797,10 @@ html[class~="dark"] .shiki span {
     height: 36px;
     padding: 0 12px;
     font-size: 14px;
-    background: #1f2937;
-    color: #fff;
+    background: var(--article-bg);
+    color: var(--primary-color);
     text-decoration: none;
-    border: 1px solid #1f2937;
+    border: 1px solid #ddd;
     border-radius: 4px;
     transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     font-weight: 500;
@@ -814,14 +814,20 @@ html[class~="dark"] .shiki span {
     justify-content: center;
 }
 
-/* 按钮固定深色 + 白字（两种模式一致），点击不变色；
-   鼠标悬停仅做轻微提亮，文字保持白色 */
+/* 默认浅色描边；悬停(鼠标)/按下(触摸) 高亮变深色 + 白字，与页码逻辑一致 */
 @media (hover: hover) and (pointer: fine) {
     .pagination-nav:hover {
-        background: #374151;
+        background: #1f2937;
         color: #fff;
+        border-color: #1f2937;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
+}
+
+.pagination-nav:active {
+    background: #1f2937;
+    color: #fff;
+    border-color: #1f2937;
 }
 
 /* 仅键盘导航显示焦点轮廓，触摸/鼠标点击后不再"粘住" */
@@ -841,7 +847,7 @@ html[class~="dark"] .shiki span {
 }
 
 :root[class~="dark"] .pagination-nav {
-    border-color: #374151;
+    border-color: #4a5568;
 }
 
 .pagination-numbers {
@@ -870,10 +876,17 @@ html[class~="dark"] .shiki span {
 
 @media (hover: hover) and (pointer: fine) {
     .pagination-number:hover {
-        background: var(--primary-color);
-        color: var(--bg-color);
+        background: #1f2937;
+        color: #fff;
+        border-color: #1f2937;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
+}
+
+.pagination-number:active {
+    background: #1f2937;
+    color: #fff;
+    border-color: #1f2937;
 }
 
 .pagination-number:focus-visible {
