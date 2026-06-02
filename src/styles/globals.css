@@ -795,9 +795,10 @@ html[class~="dark"] .shiki span {
 
 .pagination-nav {
     padding: 8px 16px;
-    color: var(--primary-color);
+    background: #1f2937;
+    color: #fff;
     text-decoration: none;
-    border: 1px solid #ddd;
+    border: 1px solid #1f2937;
     border-radius: 4px;
     transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     font-weight: 500;
@@ -811,11 +812,12 @@ html[class~="dark"] .shiki span {
     justify-content: center;
 }
 
-/* 颜色反转仅用于鼠标设备：触摸设备上 :hover 会"粘住"，导致点击后文字变色 */
+/* 按钮固定深色 + 白字（两种模式一致），点击不变色；
+   鼠标悬停仅做轻微提亮，文字保持白色 */
 @media (hover: hover) and (pointer: fine) {
     .pagination-nav:hover {
-        background: var(--primary-color);
-        color: var(--bg-color);
+        background: #374151;
+        color: #fff;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 }
@@ -837,7 +839,7 @@ html[class~="dark"] .shiki span {
 }
 
 :root[class~="dark"] .pagination-nav {
-    border-color: #4a5568;
+    border-color: #374151;
 }
 
 .pagination-numbers {
