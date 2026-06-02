@@ -824,8 +824,8 @@ html[class~="dark"] .shiki span {
     }
 }
 
-.pagination-nav:active,
-.pagination-nav:focus {
+/* 仅键盘导航显示焦点轮廓，触摸/鼠标点击后不再"粘住" */
+.pagination-nav:focus-visible {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
@@ -876,8 +876,7 @@ html[class~="dark"] .shiki span {
     }
 }
 
-.pagination-number:active,
-.pagination-number:focus {
+.pagination-number:focus-visible {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
