@@ -802,7 +802,6 @@ html[class~="dark"] .shiki span {
     text-decoration: none;
     border: 1px solid #ddd;
     border-radius: 4px;
-    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     font-weight: 500;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
@@ -866,7 +865,6 @@ html[class~="dark"] .shiki span {
     text-decoration: none;
     border: 1px solid #ddd;
     border-radius: 4px;
-    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     font-weight: 500;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
