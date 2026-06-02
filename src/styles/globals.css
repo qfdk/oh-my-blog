@@ -794,7 +794,9 @@ html[class~="dark"] .shiki span {
 }
 
 .pagination-nav {
-    padding: 8px 16px;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 14px;
     background: #1f2937;
     color: #fff;
     text-decoration: none;
@@ -1092,8 +1094,6 @@ html[class~="dark"] .shiki span {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        -webkit-user-select: none;
-        user-select: none;
     }
 
     .grid {
