@@ -22,8 +22,6 @@
     text-decoration: none;
     font-weight: 500;
     position: relative;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
 

@@ -13,6 +13,7 @@ import {ThemeToggle} from "@/components/ThemeToggle";
 import CategorySidebar from "@/components/CategorySidebar";
 import NavigationLoading from "@/components/NavigationLoading";
 import ContentLoading from "@/components/ContentLoading";
+import MobileTapFix from "@/components/MobileTapFix";
 
 import styles from "./layout.module.css";
 
@@ -159,6 +160,7 @@ export default function RootLayout({children}: {
             <Suspense fallback={null}>
                 <NavigationLoading />
             </Suspense>
+            <MobileTapFix />
         </Providers>
         </body>
         </html>

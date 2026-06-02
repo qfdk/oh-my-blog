@@ -809,14 +809,15 @@ html[class~="dark"] .shiki span {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    -webkit-user-select: none;
-    user-select: none;
 }
 
-.pagination-nav:hover {
-    background: var(--primary-color);
-    color: var(--bg-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+/* 颜色反转仅用于鼠标设备：触摸设备上 :hover 会"粘住"，导致点击后文字变色 */
+@media (hover: hover) and (pointer: fine) {
+    .pagination-nav:hover {
+        background: var(--primary-color);
+        color: var(--bg-color);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
 }
 
 .pagination-nav:active,
@@ -861,14 +862,14 @@ html[class~="dark"] .shiki span {
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
     background: var(--article-bg);
-    -webkit-user-select: none;
-    user-select: none;
 }
 
-.pagination-number:hover {
-    background: var(--primary-color);
-    color: var(--bg-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+@media (hover: hover) and (pointer: fine) {
+    .pagination-number:hover {
+        background: var(--primary-color);
+        color: var(--bg-color);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
 }
 
 .pagination-number:active,
