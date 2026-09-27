@@ -110,3 +110,9 @@ pnpm run deploy
 - [x] 图片优化 (Cloudflare Images)
 - [x] NProgress 路由加载进度条
 - [ ] 加密某些指定文章
+
+## 赞助
+
+<a href="https://voilapro.app/?ref=github-oh-my-blog"><img src="https://voilapro.app/images/icon.png" alt="Voilà Pro" width="160"/></a>
+
+本项目由 [Voilà Pro](https://voilapro.app/?ref=github-oh-my-blog) 赞助支持 —— macOS 语音输入工具。按住快捷键说话，文字直接落到光标处，中英法混说也能识别。
