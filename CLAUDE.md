@@ -82,12 +82,13 @@ pnpm run deploy
 
 - **主题**: next-themes + ThemeToggle，暗黑模式使用内联脚本防止闪烁
 - **导航**: `Navigation/` 组件，移动端响应式
-- **加载**: NavigationLoading (NProgress 进度条) + ContentLoading (Suspense fallback) + PageReady (内容就绪信号)
+- **加载**: NavigationLoading (NProgress 进度条) + PageReady (内容就绪信号)；内容区不包 Suspense，没有 spinner 卡片
 - **样式**: Tailwind CSS + CSS Modules (`admin.module.css`, `layout.module.css` 等)
 
 ## vinext 注意事项
 
-- vinext 是实验性框架，`loading.tsx` 不能作为真正的 Suspense boundary
+- vinext 是实验性框架。`loading.tsx` 是真正的 Suspense boundary：页面外只要有一层 Suspense（当前段或上层的 `loading.tsx`、layout 里包住 `{children}` 的 `<Suspense>`），`notFound()` 就只能返回 200 + noindex，所以根目录和前台路由不放 `loading.tsx`
+- 根 `src/app/layout.tsx` 必须保留 `export const dynamic = "force-dynamic"`：vinext 1.x 生产构建会把页面缓存在 isolate 内存里，dev 模式测不出来
 - `useSearchParams` 在 vinext 中会导致无限循环 — 避免使用
 - `vite.config.ts` 必须包含 `cloudflare()` 插件才能正常部署
 - ~~新增路由文件后需要重启 dev server~~ (vinext 0.0.19 已修复)
@@ -113,3 +114,48 @@ src/
 ├── components/                 # 前台可复用组件
 └── lib/                        # 核心工具库
 ```
+
+## Harness: 全栈开发与运维
+
+**目标:** 通过 planner → developer → reviewer 流水线，自动化博客项目的需求分析、全栈实现和代码审查。
+
+**Agent 团队:**
+| Agent | 角色 |
+|-------|------|
+| planner | 需求分析、方案设计、影响评估 |
+| developer | 全栈实现: 前端 UI + 后端 API + Worker + KV |
+| reviewer | 代码审查、构建验证、部署就绪评估 |
+
+**Skill:**
+| Skill | 用途 | 使用 Agent |
+|-------|------|-----------|
+| blog-orchestrator | 统筹全流程的入口 skill | Orchestrator (主线程) |
+| blog-dev | vinext/KV/Worker 开发规范 | developer |
+| blog-review | 审查清单 + 部署验证 | reviewer |
+
+**实行规则:**
+- 开发/修复/重构/部署相关任务请求时，通过 `blog-orchestrator` skill 启动 agent 流水线
+- 简单问题/确认可直接回答，无需启动 agent
+- 所有 agent 使用 `model: "opus"`
+- 中间产出物: `_workspace/` 目录
+
+**目录结构:**
+```
+.claude/
+├── agents/
+│   ├── planner.md
+│   ├── developer.md
+│   └── reviewer.md
+└── skills/
+    ├── blog-orchestrator/
+    │   └── SKILL.md
+    ├── blog-dev/
+    │   └── SKILL.md
+    └── blog-review/
+        └── SKILL.md
+```
+
+**变更履历:**
+| 日期 | 变更内容 | 对象 | 事由 |
+|------|----------|------|------|
+| 2026-04-11 | 初始构成 | 全体 | - |
