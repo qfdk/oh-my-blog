@@ -5,32 +5,33 @@
   "scripts": {
     "dev": "vinext dev --port 3001",
     "build": "vinext build",
-    "deploy": "vinext deploy --name oh-my-blog",
+    "deploy": "vinext-cloudflare deploy --name oh-my-blog",
     "upload-posts": "node scripts/upload-posts.mjs"
   },
   "dependencies": {
-    "lucide-react": "^1.17.0",
-    "markdown-it": "14.2.0",
+    "lucide-react": "^1.59.0",
+    "markdown-it": "14.3.3",
     "next-themes": "^0.4.6",
     "nprogress": "^0.2.0",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
-    "react-server-dom-webpack": "^19.2.7",
-    "shiki": "^4.1.0"
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-server-dom-webpack": "^19.3.1",
+    "shiki": "^4.5.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.39.1",
-    "@types/markdown-it": "^14.1.2",
+    "@cloudflare/vite-plugin": "^1.64.0",
+    "@types/markdown-it": "^14.2.0",
     "@types/node": "^25.9.1",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^19.2.16",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-rsc": "^0.5.27",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vinext/cloudflare": "1.1.1",
+    "@vitejs/plugin-rsc": "^0.5.38",
     "gray-matter": "^4.0.3",
     "typescript": "^6.0.3",
-    "vinext": "0.0.55",
-    "vite": "^8.0.16",
-    "wrangler": "^4.96.0"
+    "vinext": "1.2.1",
+    "vite": "^8.3.4",
+    "wrangler": "^4.151.1"
   },
   "type": "module",
   "pnpm": {
