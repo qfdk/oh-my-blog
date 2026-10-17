@@ -12,10 +12,12 @@ import {Providers} from "@/components/Providers";
 import {ThemeToggle} from "@/components/ThemeToggle";
 import CategorySidebar from "@/components/CategorySidebar";
 import NavigationLoading from "@/components/NavigationLoading";
-import ContentLoading from "@/components/ContentLoading";
 import MobileTapFix from "@/components/MobileTapFix";
 
 import styles from "./layout.module.css";
+
+// 页面数据来自 KV，禁止 vinext 把页面缓存在 isolate 内存中，否则增改删后显示旧页面
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
     title: {
@@ -138,9 +140,7 @@ export default function RootLayout({children}: {
 
                 <main className="layout with-sidebar">
                     <div id="content-area" className={styles.contentWrapper}>
-                        <Suspense fallback={<ContentLoading/>}>
-                            {children}
-                        </Suspense>
+                        {children}
                     </div>
                     <aside>
                         <Suspense fallback={<SidebarSkeleton/>}>
