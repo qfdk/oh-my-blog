@@ -1,5 +1,6 @@
 "use client";
 import {useEffect, useRef} from 'react';
+import {usePathname} from 'next/navigation';
 import NProgress from 'nprogress';
 
 NProgress.configure({
@@ -20,23 +21,16 @@ function shouldShowProgress(link: HTMLAnchorElement): boolean {
 
 export default function NavigationLoading() {
     const ready = useRef(false);
+    const pathname = usePathname();
+
+    // 路由切换完成时结束进度条（覆盖没有 PageReady 的页面，如后台和 not-found）
+    useEffect(() => {
+        NProgress.done();
+    }, [pathname]);
 
     useEffect(() => {
         NProgress.done();
         ready.current = true;
-
-        // Hook vinext RSC 导航，在导航完成后结束进度条
-        const win = window as Record<string, unknown>;
-        const original = win.__VINEXT_RSC_NAVIGATE__ as ((url: string) => Promise<void>) | undefined;
-        if (original) {
-            win.__VINEXT_RSC_NAVIGATE__ = async (url: string) => {
-                try {
-                    await original(url);
-                } finally {
-                    NProgress.done();
-                }
-            };
-        }
 
         const done = () => NProgress.done();
         window.addEventListener('page-ready', done);
@@ -51,7 +45,6 @@ export default function NavigationLoading() {
         document.addEventListener('click', handleClick, true);
 
         return () => {
-            if (original) win.__VINEXT_RSC_NAVIGATE__ = original;
             window.removeEventListener('page-ready', done);
             window.removeEventListener('popstate', done);
             document.removeEventListener('click', handleClick, true);

@@ -32,7 +32,7 @@ export default async function Home({searchParams}: HomeProps) {
                 currentPage={pagination.currentPage}
                 totalPages={pagination.totalPages}
             />
-            <PageReady/>
+            <PageReady key={pagination.currentPage}/>
         </>
     );
 }
