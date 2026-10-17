@@ -4,6 +4,10 @@
 # build output
 /dist
 
+# vinext typegen（tsc 依赖它，本地生成，不提交）
+/.next
+/next-env.d.ts
+
 # env & secrets
 .env*
 .dev.vars
