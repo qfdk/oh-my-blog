@@ -1,31 +1,50 @@
 import type MarkdownIt from "markdown-it";
-import {createHighlighter, type BundledLanguage} from "shiki/bundle/web";
+import {createHighlighterCore, type HighlighterCore} from "shiki/core";
+import {createJavaScriptRegexEngine} from "shiki/engine/javascript";
 
 const DEFAULT_IMG_WIDTH = 800;
 const DEFAULT_IMG_HEIGHT = 450;
 
 let markdownParserInstance: MarkdownIt | null = null;
 
-const SHIKI_LANGS: BundledLanguage[] = [
-    "bash", "javascript", "typescript", "json", "html", "css",
-    "java", "python", "yaml", "sql", "markdown",
-];
+// 按需加载的语言（单一来源）。workerd 禁止运行时编译 wasm，不能用 oniguruma 内联 wasm 引擎
+const SHIKI_LANGS = {
+    bash: () => import("shiki/langs/bash.mjs"),
+    javascript: () => import("shiki/langs/javascript.mjs"),
+    typescript: () => import("shiki/langs/typescript.mjs"),
+    json: () => import("shiki/langs/json.mjs"),
+    html: () => import("shiki/langs/html.mjs"),
+    css: () => import("shiki/langs/css.mjs"),
+    java: () => import("shiki/langs/java.mjs"),
+    python: () => import("shiki/langs/python.mjs"),
+    yaml: () => import("shiki/langs/yaml.mjs"),
+    sql: () => import("shiki/langs/sql.mjs"),
+    markdown: () => import("shiki/langs/markdown.mjs"),
+};
 
-const SUPPORTED_LANGS = new Set<string>(SHIKI_LANGS);
+type ShikiLang = keyof typeof SHIKI_LANGS;
+
+const SUPPORTED_LANGS = new Set<string>(Object.keys(SHIKI_LANGS));
 
 // 常见 fence 别名 → 已注册语言
-const LANG_ALIASES: Record<string, BundledLanguage> = {
+const LANG_ALIASES: Record<string, ShikiLang> = {
     js: "javascript", ts: "typescript", sh: "bash", shell: "bash",
     yml: "yaml", md: "markdown", py: "python", htm: "html",
 };
 
-let highlighterPromise: ReturnType<typeof createHighlighter> | null = null;
+let highlighterPromise: Promise<HighlighterCore> | null = null;
 
 function getHighlighter() {
     if (!highlighterPromise) {
-        highlighterPromise = createHighlighter({
-            langs: SHIKI_LANGS,
-            themes: ["github-light", "github-dark"],
+        highlighterPromise = createHighlighterCore({
+            langs: Object.values(SHIKI_LANGS),
+            themes: [import("shiki/themes/github-light.mjs"), import("shiki/themes/github-dark.mjs")],
+            // 固定 ES2024：ES2025 的 (?i:...) modifier 组在 Node 24 V8 正则 JIT 下会误判不匹配，输出不稳定
+            engine: createJavaScriptRegexEngine({target: "ES2024"}),
+        }).catch((error) => {
+            // 不缓存失败的 promise，下次调用重新创建
+            highlighterPromise = null;
+            throw error;
         });
     }
     return highlighterPromise;
