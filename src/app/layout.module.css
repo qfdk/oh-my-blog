@@ -14,14 +14,6 @@
     animation: pulse 1.5s ease-in-out infinite;
 }
 
-.skeletonLineMedium {
-    width: 80%;
-}
-
-.skeletonLineShort {
-    width: 60%;
-}
-
 .sidebarSkeletonList {
     list-style: none;
     display: flex;
